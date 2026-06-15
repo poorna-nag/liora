@@ -1,5 +1,15 @@
 import 'package:get_it/get_it.dart';
 
+import '../companion/animation_engine.dart';
+import '../companion/companion_manager.dart';
+import '../companion/emotion_engine.dart';
+import '../companion/language_engine.dart';
+import '../companion/memory_engine.dart';
+import '../companion/personality_engine.dart';
+import '../companion/prompt_builder.dart';
+import '../companion/relationship_engine.dart';
+import '../companion/speech_engine.dart';
+import '../companion/vision_engine.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -9,7 +19,6 @@ import '../../features/character/presentation/bloc/character_bloc.dart';
 import '../../features/chat/data/repositories/chat_repository.dart';
 import '../../features/chat/data/repositories/chat_repository_impl.dart';
 import '../../features/chat/presentation/bloc/chat_bloc.dart';
-import '../../features/emotion/data/services/emotion_engine.dart';
 import '../../features/home/data/repositories/home_repository.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/presentation/bloc/home_bloc.dart';
@@ -73,13 +82,39 @@ void setupServiceLocator({
     ..registerLazySingleton<ConversationStore>(
         () => ConversationStore(sl(), sl()))
     ..registerLazySingleton<MemoryService>(() => MemoryService(sl(), sl()))
-    ..registerLazySingleton<EmotionEngine>(() => EmotionEngine())
     ..registerLazySingleton<SpeechService>(() => SpeechService())
     ..registerLazySingleton<TtsService>(() => TtsService())
     ..registerLazySingleton<CameraService>(() => CameraService())
     ..registerLazySingleton<PermissionService>(() => PermissionService())
     ..registerLazySingleton<DataMigrationService>(
         () => const NoopDataMigrationService());
+
+  // --- Companion Engine ----------------------------------------------------
+  // The central brain. Every feature talks to CompanionManager, which composes
+  // these engines into the request pipeline.
+  sl
+    ..registerLazySingleton<EmotionEngine>(() => EmotionEngine())
+    ..registerLazySingleton<PersonalityEngine>(() => PersonalityEngine())
+    ..registerLazySingleton<LanguageEngine>(() => LanguageEngine())
+    ..registerLazySingleton<AnimationEngine>(() => AnimationEngine())
+    ..registerLazySingleton<RelationshipEngine>(
+        () => RelationshipEngine(sl(), sl()))
+    ..registerLazySingleton<MemoryEngine>(() => MemoryEngine(sl(), sl(), sl()))
+    ..registerLazySingleton<PromptBuilder>(
+        () => PromptBuilder(sl(), sl(), sl()))
+    ..registerLazySingleton<VisionEngine>(() => VisionEngine(sl()))
+    ..registerLazySingleton<SpeechEngine>(() => SpeechEngine(sl()))
+    ..registerLazySingleton<CompanionManager>(() => CompanionManager(
+          sl(), // GeminiService
+          sl(), // CharacterRepository
+          sl(), // PromptBuilder
+          sl(), // EmotionEngine
+          sl(), // RelationshipEngine
+          sl(), // AnimationEngine
+          sl(), // VisionEngine
+          sl(), // SpeechEngine
+          sl(), // LanguageEngine
+        ));
 
   // --- Repositories --------------------------------------------------------
   sl
@@ -92,11 +127,11 @@ void setupServiceLocator({
     ..registerLazySingleton<CharacterRepository>(
         () => CharacterRepositoryImpl(sl(), sl(), sl()))
     ..registerLazySingleton<ChatRepository>(
-        () => ChatRepositoryImpl(sl(), sl(), sl(), sl(), sl(), sl(), sl()))
+        () => ChatRepositoryImpl(sl(), sl()))
     ..registerLazySingleton<VoiceConversationRepository>(
         () => VoiceConversationRepositoryImpl(sl()))
     ..registerLazySingleton<VisionRepository>(
-        () => VisionRepositoryImpl(sl(), sl(), sl(), sl(), sl()))
+        () => VisionRepositoryImpl(sl(), sl()))
     ..registerLazySingleton<MultilingualRepository>(
         () => MultilingualRepositoryImpl(sl()))
     ..registerLazySingleton<TranslationRepository>(

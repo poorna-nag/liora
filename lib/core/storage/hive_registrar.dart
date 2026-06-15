@@ -1,5 +1,7 @@
 import 'package:hive_ce/hive.dart';
 
+import '../companion/models/companion_profile.dart';
+import '../companion/models/relationship_state.dart';
 import '../../features/character/data/models/character_archetype.dart';
 import '../../features/character/data/models/companion_character.dart';
 import '../../features/chat/data/models/chat_message.dart';
@@ -28,6 +30,8 @@ class HiveRegistrar {
     _registerOnce(6, EmotionAdapter());
     _registerOnce(7, CharacterArchetypeAdapter());
     _registerOnce(8, CompanionCharacterAdapter());
+    _registerOnce(9, RelationshipStateAdapter());
+    _registerOnce(10, CompanionProfileAdapter());
   }
 
   static void _registerOnce<T>(int typeId, TypeAdapter<T> adapter) {
@@ -44,6 +48,8 @@ class HiveRegistrar {
       _open(AppConstants.personalityBox),
       _open(AppConstants.settingsBox),
       _open(AppConstants.characterBox),
+      _open(AppConstants.relationshipBox),
+      _open(AppConstants.profileBox),
     ]);
   }
 

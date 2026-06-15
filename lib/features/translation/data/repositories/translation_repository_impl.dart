@@ -1,6 +1,6 @@
+import '../../../../core/companion/companion_manager.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/services/gemini_service.dart';
 import '../../../../core/storage/conversation_store.dart';
 import '../../../chat/data/models/chat_message.dart';
 import '../../../chat/data/models/chat_role.dart';
@@ -8,11 +8,13 @@ import '../../../history/data/models/conversation.dart';
 import '../models/translation_result.dart';
 import 'translation_repository.dart';
 
+/// Translation routes through the [CompanionManager] (so nothing calls Gemini
+/// directly), using its literal-translation path that bypasses persona/emotion.
 class TranslationRepositoryImpl implements TranslationRepository {
-  final GeminiService _gemini;
+  final CompanionManager _companion;
   final ConversationStore _store;
 
-  TranslationRepositoryImpl(this._gemini, this._store);
+  TranslationRepositoryImpl(this._companion, this._store);
 
   @override
   Future<Conversation> start() =>
@@ -36,12 +38,10 @@ class TranslationRepositoryImpl implements TranslationRepository {
         content: sourceText,
       );
 
-      final translated = await _gemini.generateOnce(
-        systemPrompt:
-            'You are a precise translation engine. Output ONLY the translated '
-            'text with no quotes, notes, or explanations.',
-        prompt: 'Translate the following text from $sourceLanguageName to '
-            '$targetLanguageName:\n\n$sourceText',
+      final translated = await _companion.translate(
+        text: sourceText,
+        fromLanguage: sourceLanguageName,
+        toLanguage: targetLanguageName,
       );
 
       await _store.addMessage(

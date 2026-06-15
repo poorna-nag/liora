@@ -1,14 +1,12 @@
-import '../models/emotion.dart';
+import '../../features/emotion/data/models/emotion.dart';
 
-/// Resolves the emotion a reply should be delivered with.
-///
-/// Primary source is the structured emotion tag the model returns (see the
-/// emotion protocol injected by the chat repository). When that is missing or
-/// unrecognised, a lightweight keyword heuristic infers an emotion from the
-/// reply text so the avatar/voice always have something sensible to express.
+/// Detects the emotion a reply should be delivered with — step 6 of the
+/// companion pipeline. Primary source is the structured tag the model returns
+/// (see [protocol]); when absent/unrecognised it falls back to a keyword
+/// heuristic so the avatar and voice always have an emotion to express.
 class EmotionEngine {
-  /// The instruction appended to the system prompt asking the model to return a
-  /// structured reply. Kept here so the protocol and parser stay in sync.
+  /// Instruction appended to the system prompt so the model returns a
+  /// structured reply. Kept beside the parser so the protocol stays in sync.
   static const String protocol =
       'After deciding your reply, respond ONLY with a single-line JSON object, '
       'no markdown, in exactly this shape:\n'
@@ -17,8 +15,8 @@ class EmotionEngine {
       'reply to the user>"}\n'
       'Pick the emotion that best matches the feeling of your message.';
 
-  /// Resolves the final emotion from an optional model-provided [emotionKey],
-  /// falling back to keyword detection on [text], then to [fallback].
+  /// Resolves the final emotion from an optional model [emotionKey], falling
+  /// back to keyword detection on [text], then to [fallback].
   Emotion resolve({
     String? emotionKey,
     required String text,
@@ -36,7 +34,6 @@ class EmotionEngine {
   /// Infers an emotion from [text] using simple keyword/punctuation cues.
   Emotion detectFromText(String text, {Emotion fallback = Emotion.neutral}) {
     final t = text.toLowerCase();
-
     bool has(List<String> words) => words.any(t.contains);
 
     if (has(['haha', 'lol', '😂', 'hilarious', 'so funny'])) {
@@ -46,7 +43,7 @@ class EmotionEngine {
         t.contains('!!')) {
       return Emotion.excited;
     }
-    if (has(['sorry', 'unfortunately', 'sad', 'that\'s tough', 'heartbreak'])) {
+    if (has(['sorry', 'unfortunately', 'sad', "that's tough", 'heartbreak'])) {
       return Emotion.sad;
     }
     if (has(['careful', 'worried', 'concern', 'be cautious', 'make sure'])) {
@@ -55,7 +52,7 @@ class EmotionEngine {
     if (has(['let me think', 'hmm', 'interesting question', 'consider'])) {
       return Emotion.thinking;
     }
-    if (has(['definitely', 'absolutely', 'trust me', 'i\'m sure', 'no doubt'])) {
+    if (has(['definitely', 'absolutely', 'trust me', "i'm sure", 'no doubt'])) {
       return Emotion.confident;
     }
     if (has(['wow', 'really?', 'no way', 'surprise', 'whoa'])) {
@@ -64,7 +61,7 @@ class EmotionEngine {
     if (has(['happy', 'glad', 'great', 'wonderful', 'love that', '😊'])) {
       return Emotion.happy;
     }
-    if (has(['relax', 'take your time', 'it\'s okay', 'breathe', 'calm'])) {
+    if (has(['relax', 'take your time', "it's okay", 'breathe', 'calm'])) {
       return Emotion.calm;
     }
     return fallback;
