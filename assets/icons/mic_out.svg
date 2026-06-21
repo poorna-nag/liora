@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="9" y="3" width="6" height="11" rx="3" stroke="url(#leora_primary_grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v3M8 22h8" stroke="#A0A4AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="leora_primary_grad" x1="9" y1="3" x2="15" y2="14">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+</svg>

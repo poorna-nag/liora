@@ -24,9 +24,15 @@ import '../../features/multilingual/presentation/bloc/multilingual_bloc.dart';
 import '../../features/multilingual/presentation/screen/multilingual_screen.dart';
 import '../../features/personality/presentation/bloc/personality_bloc.dart';
 import '../../features/personality/presentation/screen/personality_screen.dart';
+import '../../features/planner/presentation/bloc/planner_bloc.dart';
+import '../../features/planner/presentation/screen/planner_screen.dart';
 import '../../features/settings/presentation/screen/settings_screen.dart';
 import '../../features/translation/presentation/bloc/translation_bloc.dart';
 import '../../features/translation/presentation/screen/translation_screen.dart';
+import '../../features/ar/presentation/bloc/ar_bloc.dart';
+import '../../features/ar/presentation/screen/ar_screen.dart';
+import '../../features/live_vision/presentation/bloc/live_vision_bloc.dart';
+import '../../features/live_vision/presentation/screen/live_vision_screen.dart';
 import '../../features/vision/presentation/bloc/vision_bloc.dart';
 import '../../features/vision/presentation/screen/vision_screen.dart';
 import '../../features/voice_conversation/presentation/bloc/voice_conversation_bloc.dart';
@@ -126,6 +132,20 @@ class AppRouter {
           ),
         ),
         GoRoute(
+          path: RouteNames.liveVision,
+          builder: (context, state) => BlocProvider(
+            create: (_) => sl<LiveVisionBloc>()..add(const LiveVisionStarted()),
+            child: const LiveVisionScreen(),
+          ),
+        ),
+        GoRoute(
+          path: RouteNames.ar,
+          builder: (context, state) => BlocProvider(
+            create: (_) => sl<ArBloc>()..add(const ArStarted()),
+            child: const ArScreen(),
+          ),
+        ),
+        GoRoute(
           path: RouteNames.multilingual,
           builder: (context, state) => BlocProvider(
             create: (_) =>
@@ -165,6 +185,13 @@ class AppRouter {
           builder: (context, state) => BlocProvider(
             create: (_) => sl<MemoryBloc>()..add(const MemoryStarted()),
             child: const MemoryScreen(),
+          ),
+        ),
+        GoRoute(
+          path: RouteNames.planner,
+          builder: (context, state) => BlocProvider(
+            create: (_) => sl<PlannerBloc>()..add(const PlannerStarted()),
+            child: const PlannerScreen(),
           ),
         ),
         GoRoute(

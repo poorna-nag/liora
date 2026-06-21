@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="url(#ai_grad)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="#A0A4AB" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="9" cy="10" r="1.5" fill="#00D4FF"/>
+  <circle cx="15" cy="10" r="1.5" fill="#00D4FF"/>
+  <defs>
+    <linearGradient id="ai_grad" x1="3" y1="3" x2="21" y2="21">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+</svg>

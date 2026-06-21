@@ -12,6 +12,8 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        // Required by flutter_local_notifications (uses java.time APIs).
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -25,8 +27,8 @@ android {
         applicationId = "com.example.liora"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        // Firebase requires a minimum of API 23.
-        minSdk = maxOf(23, flutter.minSdkVersion)
+        // Firebase requires API 23; ARCore (ar_flutter_plugin_engine) requires 24.
+        minSdk = maxOf(24, flutter.minSdkVersion)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -43,4 +45,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Backports java.time etc. for flutter_local_notifications on older APIs.
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

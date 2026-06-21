@@ -31,6 +31,20 @@ class HomeRepositoryImpl implements HomeRepository {
           route: RouteNames.vision,
         ),
         FeatureTile(
+          title: 'Live Vision',
+          subtitle: 'See together, in real time',
+          icon: Icons.visibility_outlined,
+          color: Color(0xFFE84393),
+          route: RouteNames.liveVision,
+        ),
+        FeatureTile(
+          title: 'AR Companion',
+          subtitle: 'Place me in your space',
+          icon: Icons.view_in_ar,
+          color: Color(0xFF6C5CE7),
+          route: RouteNames.ar,
+        ),
+        FeatureTile(
           title: 'Multilingual',
           subtitle: 'Chat in any language',
           icon: Icons.translate,
@@ -64,6 +78,13 @@ class HomeRepositoryImpl implements HomeRepository {
           icon: Icons.bookmark_outline,
           color: Color(0xFF00B894),
           route: RouteNames.memory,
+        ),
+        FeatureTile(
+          title: 'Planner',
+          subtitle: 'Goals & reminders',
+          icon: Icons.event_note_outlined,
+          color: Color(0xFFFDCB6E),
+          route: RouteNames.planner,
         ),
         FeatureTile(
           title: 'Settings',

@@ -1,3 +1,5 @@
+import 'package:battery_plus/battery_plus.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 
 import '../companion/animation_engine.dart';
@@ -10,6 +12,13 @@ import '../companion/prompt_builder.dart';
 import '../companion/relationship_engine.dart';
 import '../companion/speech_engine.dart';
 import '../companion/vision_engine.dart';
+import '../live_vision/frame_processor.dart';
+import '../live_vision/vision_session_manager.dart';
+import '../../features/live_vision/data/repositories/live_vision_repository.dart';
+import '../../features/live_vision/data/repositories/live_vision_repository_impl.dart';
+import '../../features/live_vision/presentation/bloc/live_vision_bloc.dart';
+import '../../features/ar/data/services/ar_support_service.dart';
+import '../../features/ar/presentation/bloc/ar_bloc.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -34,6 +43,9 @@ import '../../features/multilingual/presentation/bloc/multilingual_bloc.dart';
 import '../../features/personality/data/repositories/personality_repository.dart';
 import '../../features/personality/data/repositories/personality_repository_impl.dart';
 import '../../features/personality/presentation/bloc/personality_bloc.dart';
+import '../../features/planner/data/repositories/planner_repository.dart';
+import '../../features/planner/data/repositories/planner_repository_impl.dart';
+import '../../features/planner/presentation/bloc/planner_bloc.dart';
 import '../../features/settings/data/repositories/settings_repository.dart';
 import '../../features/settings/data/repositories/settings_repository_impl.dart';
 import '../../features/settings/presentation/bloc/settings_bloc.dart';
@@ -50,7 +62,9 @@ import '../migration/data_migration_service.dart';
 import '../services/auth_service.dart';
 import '../services/camera_service.dart';
 import '../services/gemini_service.dart';
+import '../services/memory_extractor.dart';
 import '../services/memory_service.dart';
+import '../services/notification_service.dart';
 import '../services/permission_service.dart';
 import '../services/speech_service.dart';
 import '../services/tts_service.dart';
@@ -82,10 +96,13 @@ void setupServiceLocator({
     ..registerLazySingleton<ConversationStore>(
         () => ConversationStore(sl(), sl()))
     ..registerLazySingleton<MemoryService>(() => MemoryService(sl(), sl()))
+    ..registerLazySingleton<MemoryExtractor>(() => MemoryExtractor(sl(), sl()))
+    ..registerLazySingleton<NotificationService>(() => NotificationService())
     ..registerLazySingleton<SpeechService>(() => SpeechService())
     ..registerLazySingleton<TtsService>(() => TtsService())
     ..registerLazySingleton<CameraService>(() => CameraService())
     ..registerLazySingleton<PermissionService>(() => PermissionService())
+    ..registerLazySingleton<ArSupportService>(() => const ArSupportService())
     ..registerLazySingleton<DataMigrationService>(
         () => const NoopDataMigrationService());
 
@@ -104,6 +121,7 @@ void setupServiceLocator({
         () => PromptBuilder(sl(), sl(), sl()))
     ..registerLazySingleton<VisionEngine>(() => VisionEngine(sl()))
     ..registerLazySingleton<SpeechEngine>(() => SpeechEngine(sl()))
+    ..registerLazySingleton<FrameProcessor>(() => const FrameProcessor())
     ..registerLazySingleton<CompanionManager>(() => CompanionManager(
           sl(), // GeminiService
           sl(), // CharacterRepository
@@ -127,7 +145,7 @@ void setupServiceLocator({
     ..registerLazySingleton<CharacterRepository>(
         () => CharacterRepositoryImpl(sl(), sl(), sl()))
     ..registerLazySingleton<ChatRepository>(
-        () => ChatRepositoryImpl(sl(), sl()))
+        () => ChatRepositoryImpl(sl(), sl(), sl()))
     ..registerLazySingleton<VoiceConversationRepository>(
         () => VoiceConversationRepositoryImpl(sl()))
     ..registerLazySingleton<VisionRepository>(
@@ -140,8 +158,28 @@ void setupServiceLocator({
         () => HistoryRepositoryImpl(sl()))
     ..registerLazySingleton<MemoryRepository>(
         () => MemoryRepositoryImpl(sl()))
+    ..registerLazySingleton<PlannerRepository>(
+        () => PlannerRepositoryImpl(sl(), sl(), sl()))
+    ..registerLazySingleton<LiveVisionRepository>(
+        () => LiveVisionRepositoryImpl(sl(), sl()))
     ..registerLazySingleton<HomeRepository>(
         () => const HomeRepositoryImpl());
+
+  // --- Live Vision (V3) ----------------------------------------------------
+  // The session manager is per-screen stateful, so it is a factory; it owns the
+  // camera, scheduler and transient scene memory for one session.
+  sl.registerFactory<VisionSessionManager>(() => VisionSessionManager(
+        sl<CameraService>(),
+        sl<CompanionManager>(),
+        sl<SpeechEngine>(),
+        sl<SpeechService>(),
+        sl<PermissionService>(),
+        sl<LiveVisionRepository>(),
+        sl<FrameProcessor>(),
+        sl<SettingsRepository>(),
+        Battery(),
+        Connectivity(),
+      ));
 
   // --- Blocs ---------------------------------------------------------------
   // SettingsBloc is a singleton because it drives the global theme/language.
@@ -153,12 +191,15 @@ void setupServiceLocator({
     ..registerFactory<VoiceConversationBloc>(
         () => VoiceConversationBloc(sl(), sl(), sl(), sl(), sl()))
     ..registerFactory<VisionBloc>(() => VisionBloc(sl()))
+    ..registerFactory<LiveVisionBloc>(() => LiveVisionBloc(sl()))
+    ..registerFactory<ArBloc>(() => ArBloc(sl()))
     ..registerFactory<MultilingualBloc>(() => MultilingualBloc(sl()))
     ..registerFactory<TranslationBloc>(
         () => TranslationBloc(sl(), sl(), sl(), sl()))
     ..registerFactory<HistoryBloc>(() => HistoryBloc(sl()))
-    ..registerFactory<HomeBloc>(() => HomeBloc(sl()))
+    ..registerFactory<HomeBloc>(() => HomeBloc(sl(), sl()))
     ..registerFactory<PersonalityBloc>(() => PersonalityBloc(sl()))
+    ..registerFactory<PlannerBloc>(() => PlannerBloc(sl()))
     ..registerFactory<CharacterBloc>(() => CharacterBloc(sl()))
     ..registerFactory<MemoryBloc>(() => MemoryBloc(sl()));
 }

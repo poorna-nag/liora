@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import '../../../../core/companion/companion_manager.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/services/gemini_service.dart';
+import '../../../../core/services/memory_extractor.dart';
 import '../../../../core/storage/conversation_store.dart';
 import '../../../history/data/models/conversation.dart';
 import '../models/chat_message.dart';
@@ -14,8 +17,9 @@ import 'chat_repository.dart';
 class ChatRepositoryImpl implements ChatRepository {
   final ConversationStore _store;
   final CompanionManager _companion;
+  final MemoryExtractor _memoryExtractor;
 
-  ChatRepositoryImpl(this._store, this._companion);
+  ChatRepositoryImpl(this._store, this._companion, this._memoryExtractor);
 
   @override
   Future<Conversation> startConversation({
@@ -54,6 +58,9 @@ class ChatRepositoryImpl implements ChatRepository {
         history: history,
         extraInstruction: languageInstruction,
       );
+
+      // Phase 5: proactively remember durable facts (fire-and-forget).
+      unawaited(_memoryExtractor.captureFrom(text));
 
       return _store.addMessage(
         conversationId: conversationId,

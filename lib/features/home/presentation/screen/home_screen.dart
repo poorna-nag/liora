@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
         builder: (context, state) {
           return CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(child: _HomeHeader()),
+              SliverToBoxAdapter(child: _HomeHeader(reminder: state.reminder)),
               SliverPadding(
                 padding: const EdgeInsets.all(16),
                 sliver: SliverGrid(
@@ -60,7 +60,8 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeHeader extends StatelessWidget {
-  const _HomeHeader();
+  final String? reminder;
+  const _HomeHeader({this.reminder});
 
   String _greeting() {
     final hour = DateTime.now().hour;
@@ -91,6 +92,18 @@ class _HomeHeader extends StatelessWidget {
                   color: Theme.of(context).colorScheme.outline,
                 ),
           ),
+          if (reminder != null) ...[
+            const SizedBox(height: 12),
+            Card(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              child: ListTile(
+                leading: const Icon(Icons.notifications_active_outlined),
+                title: Text(reminder!),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push(RouteNames.planner),
+              ),
+            ),
+          ],
           if (isGuest) ...[
             const SizedBox(height: 12),
             Card(

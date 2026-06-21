@@ -1,13 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Network for AI calls; mic for speech-to-text; camera for vision. -->
+    <!-- Network for AI calls; mic for speech-to-text; camera for vision/AR. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Phase 6: scheduled reminder notifications (Android 13+). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!-- Phase 7: ARCore. Optional so non-AR devices can still install the app. -->
+    <uses-feature android:name="android.hardware.camera.ar" android:required="false"/>
 
     <application
         android:label="Liora"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- ARCore marked optional: the app degrades gracefully on devices
+             without Google Play Services for AR. -->
+        <meta-data android:name="com.google.ar.core" android:value="optional"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

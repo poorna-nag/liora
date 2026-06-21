@@ -1,0 +1,24 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="avatarGlow" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+    <linearGradient id="chassisGrad" x1="24" y1="28" x2="96" y2="84" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1A1E24"/>
+      <stop offset="100%" stop-color="#121417"/>
+    </linearGradient>
+    <filter id="neonOrb">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="50" stroke="url(#avatarGlow)" stroke-width="2" stroke-dasharray="6 4" opacity="0.4" filter="url(#neonOrb)"/>
+  <path d="M40 95C40 90 48 84 60 84C72 84 80 90 80 95L75 106H45L40 95Z" fill="url(#chassisGrad)" stroke="url(#avatarGlow)" stroke-width="1.5"/>
+  <rect x="24" y="26" width="72" height="56" rx="28" fill="url(#chassisGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+  <rect x="32" y="32" width="56" height="44" rx="20" fill="#08090A" stroke="url(#avatarGlow)" stroke-width="1.5"/>
+  <ellipse cx="48" cy="54" rx="5" ry="7" fill="#00D4FF" filter="url(#neonOrb)"/>
+  <ellipse cx="72" cy="54" rx="5" ry="7" fill="#00D4FF" filter="url(#neonOrb)"/>
+  <rect x="15" y="42" width="9" height="24" rx="4.5" fill="#1A1E24" stroke="#7B61FF" stroke-width="1.5"/>
+  <rect x="96" y="42" width="9" height="24" rx="4.5" fill="#1A1E24" stroke="#00D4FF" stroke-width="1.5"/>
+</svg>

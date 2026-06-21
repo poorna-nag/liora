@@ -19,9 +19,11 @@ class CameraService {
   }
 
   /// Creates and initializes a [CameraController] for live preview.
-  /// Caller is responsible for disposing it.
+  /// Caller is responsible for disposing it. [preset] lets callers trade
+  /// resolution for performance/battery (Live Vision uses `medium`).
   Future<CameraController> createController({
     CameraLensDirection direction = CameraLensDirection.back,
+    ResolutionPreset preset = ResolutionPreset.high,
   }) async {
     final cameras = await availableCameraList();
     if (cameras.isEmpty) {
@@ -33,7 +35,7 @@ class CameraService {
     );
     final controller = CameraController(
       camera,
-      ResolutionPreset.high,
+      preset,
       enableAudio: false,
     );
     await controller.initialize();

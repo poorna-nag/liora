@@ -1,0 +1,18 @@
+<svg width="280" height="120" viewBox="0 0 280 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="graphFill" x1="0" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B61FF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="lineStroke" x1="0" y1="0" x2="280" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+  <line x1="0" y1="20" x2="280" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="0" y1="60" x2="280" y2="60" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="0" y1="100" x2="280" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <path d="M0 90C40 70 60 30 100 40C140 50 160 100 200 60C240 20 260 10 280 5V120H0V90Z" fill="url(#graphFill)"/>
+  <path d="M0 90C40 70 60 30 100 40C140 50 160 100 200 60C240 20 260 10 280 5" stroke="url(#lineStroke)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="60" r="5" fill="#00D4FF" stroke="#FFFFFF" stroke-width="1.5"/>
+</svg>

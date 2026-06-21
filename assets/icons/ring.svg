@@ -1,0 +1,10 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="spinnerSweep" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B61FF" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#00D4FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#1A1E24" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="20" stroke="url(#spinnerSweep)" stroke-width="4" stroke-linecap="round"/>
+</svg>

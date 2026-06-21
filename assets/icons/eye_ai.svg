@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bot_glow"><stop offset="0%" stop-color="#7B61FF"/><stop offset="100%" stop-color="#00D4FF"/></linearGradient>
+    <linearGradient id="laser" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.8"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></linearGradient>
+  </defs>
+  <path d="M22 48c0-4 4-8 10-8s10 4 10 8l-3 6H25l-3-6z" fill="#1A1E24" stroke="url(#bot_glow)" stroke-width="1.5"/>
+  <rect x="14" y="16" width="36" height="26" rx="13" fill="#1A1E24" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+  <rect x="18" y="20" width="28" height="18" rx="9" fill="#08090A" stroke="url(#bot_glow)" stroke-width="1"/>
+  <circle cx="26" cy="29" r="3.5" fill="#00D4FF"/>
+  <circle cx="38" cy="29" r="3.5" fill="#00D4FF"/>
+  <path d="M20 34L4 58h56L44 34H20z" fill="url(#laser)" opacity="0.15"/>
+  <line x1="4" y1="58" x2="60" y2="58" stroke="#00D4FF" stroke-width="1.5" stroke-dasharray="2 2"/>
+</svg>

@@ -10,6 +10,7 @@ import '../../features/emotion/data/models/emotion.dart';
 import '../../features/history/data/models/conversation.dart';
 import '../../features/memory/data/models/memory_entry.dart';
 import '../../features/personality/data/models/ai_personality.dart';
+import '../../features/planner/data/models/plan_item.dart';
 import '../../features/settings/data/models/app_settings.dart';
 import '../constants/app_constants.dart';
 
@@ -32,6 +33,8 @@ class HiveRegistrar {
     _registerOnce(8, CompanionCharacterAdapter());
     _registerOnce(9, RelationshipStateAdapter());
     _registerOnce(10, CompanionProfileAdapter());
+    // V3 planner adapter.
+    _registerOnce(11, PlanItemAdapter());
   }
 
   static void _registerOnce<T>(int typeId, TypeAdapter<T> adapter) {
@@ -50,6 +53,7 @@ class HiveRegistrar {
       _open(AppConstants.characterBox),
       _open(AppConstants.relationshipBox),
       _open(AppConstants.profileBox),
+      _open(AppConstants.plannerBox),
     ]);
   }
 

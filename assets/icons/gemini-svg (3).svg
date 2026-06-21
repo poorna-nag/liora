@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 12C16 9.79086 17.7909 8 20 8H28C30.2091 8 32 9.79086 32 12V40C32 44.4183 35.5817 48 40 48H48C50.2109 48 52 49.7909 52 52V52C52 54.2091 50.2109 56 48 56H20C17.7909 56 16 54.2091 16 52V12Z" fill="url(#leora_logo_grad)" filter="url(#neon_glow_filter)"/>
+  <defs>
+    <linearGradient id="leora_logo_grad" x1="16" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+    <filter id="neon_glow_filter" x="0" y="0" width="68" height="68" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+</svg>

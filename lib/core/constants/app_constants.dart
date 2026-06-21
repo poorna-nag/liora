@@ -19,6 +19,8 @@ class AppConstants {
   static const String characterBox = 'characters';
   static const String relationshipBox = 'relationships';
   static const String profileBox = 'companion_profile';
+  // V3 planner data.
+  static const String plannerBox = 'plan_items';
 
   // SharedPreferences keys (small scalars).
   static const String prefGuestId = 'guest_id';

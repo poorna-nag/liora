@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 
 import '../di/service_locator.dart';
 import '../services/auth_service.dart';
 import '../services/gemini_service.dart';
+import '../services/notification_service.dart';
 import '../session/session_manager.dart';
 import '../../features/auth/data/repositories/auth_repository.dart';
 import '../../features/character/data/repositories/character_repository.dart';
@@ -46,6 +50,10 @@ class AppInitializer {
     // Dependencies can now be wired.
     setupServiceLocator(prefs: prefs, session: session);
 
+    // Timezone DB + notifications (for planner reminders). Best-effort: a
+    // failure here must not block startup.
+    await _initNotifications();
+
     // 5. User settings + AI configuration (seed personality presets).
     yield InitProgress(InitStep.configuration, 5, total);
     await sl<PersonalityRepository>().seedPresetsIfNeeded();
@@ -57,6 +65,19 @@ class AppInitializer {
     sl<GeminiService>().markAvailable(_aiAvailable);
     sl<AuthService>().markAvailable(_aiAvailable);
     await sl<AuthRepository>().bootstrap();
+  }
+
+  /// Loads the timezone database, points it at the device's local zone, and
+  /// initializes the notification plugin. Guarded so startup never fails here.
+  Future<void> _initNotifications() async {
+    try {
+      tzdata.initializeTimeZones();
+      final info = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(info.identifier));
+    } catch (_) {
+      // Fall back to the default (UTC) local zone if detection fails.
+    }
+    await sl<NotificationService>().init();
   }
 
   Future<bool> _initFirebase() async {

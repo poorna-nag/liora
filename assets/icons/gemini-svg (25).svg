@@ -1,0 +1,42 @@
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ambientGlow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#2E1A47" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#121417" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#08090A"/>
+    </radialGradient>
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="390" height="844" fill="url(#ambientGlow)"/>
+
+  <text x="340" y="64" fill="#A0A4AB" font-family="system-ui, sans-serif" font-size="14" font-weight="500" text-anchor="end" letter-spacing="0.5">Skip</text>
+
+  <g transform="translate(135, 220)">
+    <circle cx="60" cy="60" r="54" stroke="url(#btnGrad)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+    <rect x="24" y="28" width="72" height="56" rx="28" fill="#1A1E24" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+    <rect x="32" y="32" width="56" height="44" rx="20" fill="#08090A" stroke="url(#btnGrad)" stroke-width="1.5"/>
+    <ellipse cx="48" cy="54" rx="5" ry="7" fill="#00D4FF"/>
+    <ellipse cx="72" cy="54" rx="5" ry="7" fill="#00D4FF"/>
+  </g>
+
+  <text x="195" y="480" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="700" text-anchor="middle" letter-spacing="-0.5">AI Companion</text>
+  <text x="195" y="515" fill="#A0A4AB" font-family="system-ui, sans-serif" font-size="14" font-weight="400" text-anchor="middle">
+    <tspan x="195" dy="0">An original personal robot intelligence</tspan>
+    <tspan x="195" dy="20">evolving through daily interaction.</tspan>
+  </text>
+
+  <circle cx="155" cy="680" r="4" fill="#7B61FF"/>
+  <circle cx="175" cy="680" r="3" fill="#1A1E24" stroke="rgba(255,255,255,0.2)"/>
+  <circle cx="195" cy="680" r="3" fill="#1A1E24" stroke="rgba(255,255,255,0.2)"/>
+  <circle cx="215" cy="680" r="3" fill="#1A1E24" stroke="rgba(255,255,255,0.2)"/>
+  <circle cx="235" cy="680" r="3" fill="#1A1E24" stroke="rgba(255,255,255,0.2)"/>
+
+  <g transform="translate(45, 720)">
+    <rect width="300" height="56" rx="28" fill="url(#btnGrad)"/>
+    <text x="150" y="33" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="16" font-weight="600" text-anchor="middle" letter-spacing="0.5">Continue</text>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="url(#qrGrad)" stroke-width="2"/>
+  <rect x="4" y="4" width="2" height="2" fill="#7B61FF"/>
+  <rect x="16" y="2" width="6" height="6" rx="1.5" stroke="url(#qrGrad)" stroke-width="2"/>
+  <rect x="18" y="4" width="2" height="2" fill="#00D4FF"/>
+  <rect x="2" y="16" width="6" height="6" rx="1.5" stroke="url(#qrGrad)" stroke-width="2"/>
+  <rect x="4" y="18" width="2" height="2" fill="#00D4FF"/>
+  <path d="M16 16h2v2h-2zm4 4h2v2h-2zm2-4h-2v2h2zm-6 4h2v2h-2z" fill="#A0A4AB"/>
+  <defs>
+    <linearGradient id="qrGrad" x1="2" y1="2" x2="22" y2="22">
+      <stop offset="0%" stop-color="#7B61FF"/>
+      <stop offset="100%" stop-color="#00D4FF"/>
+    </linearGradient>
+  </defs>
+</svg>
